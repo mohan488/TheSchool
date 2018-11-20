@@ -59,5 +59,5 @@ class LoginForm(forms.Form):
      model = User
      fields = ('username','password')
 
-    email = forms.EmailField()
+    username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)

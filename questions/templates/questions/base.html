@@ -84,14 +84,64 @@ padding: 0px 8px;
                     <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_target">
-                    <a class="dropdown-item" href="#">Principal</a>
-                    <a class="dropdown-item" href='studentregistration/'>Student</a>
+                    <a class="dropdown-item" href="{% url 'questions:registerprincipal' %}">Principal</a>
+                    <a class="dropdown-item" href='{% url "questions:registerstudent" %}'>Student</a>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-sign-in"></i>Login</a>
+                <a class="nav-link" href="{% url 'questions:userlogin' %}"><i class="fa fa-sign-in"></i>Login</a>
             </li>
+
+            {% else %}
+                {% if user.is_student %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-product-hunt"></i>Questions</a>
+                    </li>
+
+                {% elif user.is_teacher %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-product-hunt"></i>Questions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='#'><i class="fa fa-plus"></i>Question</a>
+                    </li>
+
+                {% elif user.is_principal %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href='#'><i class="fa fa-plus"></i>Question</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='{% url "questions:registerteacher" %}'><i class="fa fa-user-plus"></i>Teacher</a>
+                    </li>
+                    <li class=" nav-item dropdown">
+                        <a class= "nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href="#">
+                            <i class="fa fa-product-hunt"></i>
+                                   Details
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_target">
+                            <a class="dropdown-item" href="#">Teachers</a>
+                            <a class="dropdown-item" href='#'>Students</a>
+                            <a class="dropdown-item" href='#'>Questions</a>
+                        </div>
+                    </li>
+
+                {% endif %}
+
+                <li class="nav-item dropdown">
+                    <a class= "nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target" href='#'>
+                        <img class="rounded-circle account-img" src="https://www.ienglishstatus.com/wp-content/uploads/2018/04/Anonymous-Whatsapp-profile-picture.jpg" height="30" width="30"><span id="pic">{{ user.first_name }}</span>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_target">
+                        <a class="dropdown-item" href="{% url 'questions:userprofile' %}"><i class="fa fa-user"></i>User</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Logout</a>
+                    </div>
+                </li>
 
             {% endif %}
 
@@ -111,18 +161,21 @@ padding: 0px 8px;
 
 <!--Footer Begins here-->
 <footer>
-        <div class="container-fluid">
-            <div style="float:left;">
-              <span class="copyright">Copyright &copy; The School 2018</span>
-            </div>
-            <div style="float:right">
-                <ul class="imgadjust">
-                  <img src="https://www.unomaha.edu/_files/images/logo-subsite-o-2.png">
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div style="float:left;">
+            <span class="copyright">Copyright &copy; The School 2018</span>
         </div>
-  </footer>
-  <!-- Footer Ends Here-->
+        <div style="float:right">
+            <a class="navbar-brand" href="/">
+                <img src="https://www.unomaha.edu/_files/images/logo-subsite-o-2.png">
+            </a>
+            <a class ="navbar-brand" href='/' id="uno">
+                <b>The School</b>
+            </a>
+        </div>
+    </div>
+</footer>
+<!-- Footer Ends Here-->
 
 </body>
 
