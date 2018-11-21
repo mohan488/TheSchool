@@ -15,9 +15,8 @@ Written in Python/Django
 
 #Database Migration:
 navigate to the folder containing manage.py and run the following commands in order.
-1.	python manage.py makemigrations
-2.	python manage.py migrate
-3.	python manage.py runserver
+1.	python manage.py migrate
+2.	python manage.py runserver
 
 
 #Test Server:

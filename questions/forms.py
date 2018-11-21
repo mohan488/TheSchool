@@ -54,10 +54,18 @@ class userForm(forms.ModelForm):
                     raise forms.ValidationError("Password should have atleast one Special Character")
 
 
-class LoginForm(forms.Form):
+class loginForm(forms.Form):
     class Meta:
-     model = User
-     fields = ('username','password')
+        model = User
+        fields = ('username','password')
 
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class questionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('text',)
+
+    text = forms.CharField(label="Question", widget=forms.Textarea)

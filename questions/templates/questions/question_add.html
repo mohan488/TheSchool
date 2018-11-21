@@ -55,7 +55,7 @@ width:91%;
 }
 .btn-custom
 {
-left:200px;
+left:150px;
 }
 }
 
@@ -78,28 +78,28 @@ font-weight: bold;
   }
 
 </style>
-{% for message in messages %}
-<div class="alert alert-danger">
-<a class="close" href="#" data-dismiss="alert">×</a>
-{{ message }}
-</div>
-{% endfor %}
-  <div class="row justify-content-md-center">
-		<div class="col-xl-6 col-md-10 col-sm-8">
-	      <div class = "panel panel-default" style="margin-bottom:5%;">
-		      <div class="panel-heading text-center"><h4>Registration </h4></div>
-			        <div class="panel-body">
-                <form action="." name="myForm" method="post">{% csrf_token %}
-                  <div class = "row">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                       {{ user_form|bootstrap }}
+
+
+<div class="row justify-content-md-center">
+	<div class="col-xl-6 col-md-10 col-sm-8">
+	    <div class = "panel panel-default" style="margin-bottom:5%;">
+		    <div class="panel-heading text-center"><h4>Add a new question </h4></div>
+			    <div class="panel-body">
+                    <form action="." name="questionform" method="post">{% csrf_token %}
+                    <div class = "row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                        {{ form|bootstrap }}
+                        </div>
                     </div>
-                  </div>
-                  <p><button type="submit" class="btn btn-custom">Submit</button></p><br><br>
-                </form>
-              </div>
-          </div>
-      </div>
-  </div>
+                    <p>
+                        <button type="submit" class="btn btn-custom">Save</button>
+                        <a href="{% url 'questions:home' %}" class="btn btn-custom btn-outline-secondary" role="button">Nevermind</a>
+                    </p><br><br>
+                    </form>
+			    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

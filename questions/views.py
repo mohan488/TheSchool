@@ -54,26 +54,27 @@ def registerTeacher(request):
             user.set_password(user_form.cleaned_data['password'])
             user.is_teacher = True
             user.save()
-            return render(request, 'questions/register_done.html', )
+            messages.success(request, 'Teacher added Successfully')
+            return redirect('questions:listteachers')
     else:
         user_form = userForm()
     return render(request, 'questions/registration.html', {'user_form': user_form})
 
 def userLogin(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = loginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
             if user is not None:
                 if user.is_principal or user.is_teacher or user.is_student:
                     login(request, user)
-                    return redirect('/')
+                    return redirect('questions:home')
             else:
                 messages.error(request, 'User Name or Password is incorrect')
                 return render(request, 'questions/login.html')
     else:
-        form = LoginForm()
+        form = loginForm()
     return render(request, 'questions/login.html', {'form': form})
 
 def logout_view(request):
@@ -82,3 +83,37 @@ def logout_view(request):
 @login_required
 def userProfile(request):
     return render(request, 'questions/user_profile.html')
+
+@login_required
+def createQuestion(request):
+
+    if request.method == 'POST':
+        form = questionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.teacher = User.objects.get(id=request.user.id)
+            question.save()
+            messages.success(request, 'Question added Successfully')
+            return redirect('questions:listquestions')
+    else:
+        form = questionForm()
+    return render(request, 'questions/question_add.html', {'form': form})
+
+
+@login_required
+def listQuestions(request):
+    questions = Question.objects.all()
+
+    return render(request, 'questions/questions_list.html', {'questions': questions})
+
+@login_required
+def listStudents(request):
+    students = User.objects.filter(is_student=True)
+
+    return render(request, 'questions/students_list.html', {'students': students})
+
+@login_required
+def listTeachers(request):
+    teachers = User.objects.filter(is_teacher=True)
+
+    return render(request, 'questions/teachers_list.html', {'teachers': teachers})
